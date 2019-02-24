@@ -16,13 +16,40 @@
  unsigned long remove_digit(int index, unsigned long n)
  {
    long numPow=pow(10,index);
-   return (n/(numPow*10))*numPow+(n%numPow);
+   unsigned long num;
+   num = n/(numPow*10)*numPow+(n%numPow);
+
+   return num;
  }
+  bool is_prime(unsigned long p)
+  {
+    if (p <= 1 || (p % 2 == 0 && p > 2))
+    {
+      return false;
+    }
 
- int get_ways(unsigned long p)
- {
-   int way=0;
+    for(int i = 3; i <= sqrt(p); i+= 2)
+    {
+      if (p % i == 0)
+          return false;
+    }
 
+    return true;
+  }
+
+  int get_lenght(unsigned long n)
+  {
+    int lenght=0;
+
+    while (n>1) {
+      n/=10;
+      lenght++;
+    }
+    return lenght;
+}
+
+int get_ways(unsigned long p)
+{
   if(p<10 && is_prime(p))
   {
     return 1;
@@ -31,7 +58,8 @@
   {
     return 0;
   }
-
+  
+  int ways = 0;
   for (int i = 0; i < get_lenght(p); i++)
   {
     if(is_prime(remove_digit(i,p)))
@@ -41,30 +69,3 @@
   }
   return way;
  }
-
- bool is_prime(unsigned long p)
- {
-   if (p <= 1 || (p % 2 == 0 && p > 2))
-   {
-     return false;
-   }
-
-   for(int i = 3; i <= sqrt(p); i+= 2)
-   {
-     if (p % i == 0)
-        return false;
-   }
-
-   return true;
- }
-
- int get_lenght(unsigned long n)
- {
-  int lenght=0;
-
-  while (n>1) {
-    n/=10;
-    lenght++;
-  }
-  return lenght;
-}
